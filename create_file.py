@@ -31,7 +31,13 @@ f.write('''
 (arity loudSong 1)
 (arg1Isa loudSong MillionSong)
 (comment loudSong
- "(loudSong ?millionsong) indicates that ?millionsong has a loudness above X.")
+ "(loudSong ?millionsong) indicates that ?millionsong has a loudness above -10.0.")
+
+(isa quietSong Predicate)
+(arity quietSong 1)
+(arg1Isa quietSong MillionSong)
+(comment quietSong
+ "(quietSong ?millionsong) indicates that ?millionsong has a loudness below -10.0.")
  
 ''')
 ###################################
@@ -132,28 +138,30 @@ f.write(";;; Songs\n\n")
 for song_title in song_titles:
   f.write("(isa {} MillionSong)\n".format(song_title))
   
-f.write("\n;;; Fast songs\n\n")
+f.write("\n;;; Tempo classifications\n\n")
 for song_title in song_titles:
   song_tempo = song_info_dict[song_title][5]
   if song_tempo >= 120.0:
     f.write("(fastSong {})\n".format(song_title))
 
-f.write("\n;;; Loud songs\n\n")
+f.write("\n;;; Loudness classifications\n\n")
 for song_title in song_titles:
   song_loudness = song_info_dict[song_title][3]
   if song_loudness >= -10.0:
     f.write("(loudSong {})\n".format(song_title))
+  else:
+    f.write("(quietSong {})\n".format(song_title))
 
 f.write('''\n\n
-(isa louderThan Predicate)
-(arity louderThan 2)
-(arg1Isa louderThan MillionSong)
-(arg2Isa louderThan MillionSong)
-(comment louderThan
- "(louderThan ?millionsong1 ?millionsong2) indicates that ?millionsong1 is louder than ?millionsong2.")
+(isa goodRockSong Predicate)
+(arity goodRockSong 1)
+(arg1Isa goodRockSong MillionSong)
+(comment goodRockSong
+ "(goodRockSong ?millionsong) indicates that ?millionsong is a loudSong and not a quietSong.")
 
-(<== (louderThan ?millionsong1 ?millionsong2)
-     (loudSong ?millionsong1)
-     (uninferredSentence (loudSong ?millionsong2))) ;; Skip if ?millionsong2 is loud
+(<== (goodRockSong ?millionsong)
+     (loudSong ?millionsong)
+     (fastSong ?millionsong)
+     (uninferredSentence (quietSong ?millionsong))) ;; Skip if ?millionsong is loud
 ''')
 f.close()

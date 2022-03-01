@@ -1,3 +1,4 @@
+
 ;; An example of what should autopopulate the file
 
 (in-microtheory SongsMt)
@@ -23,7 +24,13 @@
 (arity loudSong 1)
 (arg1Isa loudSong MillionSong)
 (comment loudSong
- "(loudSong ?millionsong) indicates that ?millionsong has a loudness above X.")
+ "(loudSong ?millionsong) indicates that ?millionsong has a loudness above -10.0.")
+
+(isa quietSong Predicate)
+(arity quietSong 1)
+(arg1Isa quietSong MillionSong)
+(comment quietSong
+ "(quietSong ?millionsong) indicates that ?millionsong has a loudness below -10.0.")
  
 ;;; Songs
 
@@ -78,7 +85,7 @@
 (isa TheManDelusion MillionSong)
 (isa HeIsNotSilentOutOfTheGreyAlbumVersion MillionSong)
 
-;;; Fast songs
+;;; Tempo classifications
 
 (fastSong Tanssivaan)
 (fastSong NoOneCouldEver)
@@ -107,52 +114,67 @@
 (fastSong Scream)
 (fastSong HeIsNotSilentOutOfTheGreyAlbumVersion)
 
-;;; Loud songs
+;;; Loudness classifications
 
 (loudSong SilentNight)
+(quietSong Tanssivaan)
 (loudSong NoOneCouldEver)
 (loudSong SiVosQuers)
 (loudSong TangleOfAspens)
+(quietSong SymphonyNo1GminorSinfonieSerieuseAllegroconenergia)
 (loudSong WeHaveGotLove)
+(quietSong 2DaBeatChyall)
+(quietSong Goodbye)
+(quietSong Mamamamacantyousee)
+(quietSong Lantarctique)
+(quietSong Elhijodelpueblo)
 (loudSong ColdBeerfeatPrinceMetropolitan)
+(quietSong Pilots)
+(quietSong NGana)
 (loudSong 006)
+(quietSong LookingForTheHeartOfSaturday)
 (loudSong EthosofCoercion)
 (loudSong RockNRule)
 (loudSong Labolaextra)
 (loudSong IMadeItOver)
+(quietSong Debussy12EtudesVIPourleshuitdoigts)
 (loudSong Nervous)
 (loudSong InTheJourney)
+(quietSong FuckinEthicPeople999)
 (loudSong TuVidaConLaMa)
 (loudSong ImReady)
 (loudSong TakeAsNeeded)
+(quietSong AutumnInTheMindAcousticVersion)
+(quietSong Tequila)
 (loudSong AllForAPurposeSpeakLifeAlbumVersion)
 (loudSong COn)
 (loudSong RaspberryBeretLPVersion)
 (loudSong Allofthesameblood)
 (loudSong OneLittleTooLittle)
+(quietSong CockleshellHeroes)
+(quietSong Trancesequence)
 (loudSong WonderfulStash)
 (loudSong Lafilo)
 (loudSong ThrowItAway)
 (loudSong BeforeHeKissedMe)
+(quietSong Blessed)
 (loudSong GoaAmsterdam)
 (loudSong DisasterDemoVersion)
 (loudSong NightAndDay)
 (loudSong Passione)
+(quietSong MyEverythingScrewedfeatTraeTheTruth)
 (loudSong Scream)
 (loudSong TheManDelusion)
 (loudSong HeIsNotSilentOutOfTheGreyAlbumVersion)
 
-(isa SomeHardCoreRockSong MillionSong)
-(isa SomeQuietSong MillionSong)
-(loudSong SomeHardCoreRockSong)
 
-(isa louderThan Predicate)
-(arity louderThan 2)
-(arg1Isa louderThan MillionSong)
-(arg2Isa louderThan MillionSong)
-(comment louderThan
- "(louderThan ?millionsong1 ?millionsong2) indicates that ?millionsong1 is louder than ?millionsong2.")
 
-(<== (louderThan ?millionsong1 ?millionsong2)
-     (loudSong ?millionsong1)
-     (uninferredSentence (loudSong ?millionsong2))) ;; Skip if ?millionsong2 is loud
+(isa goodRockSong Predicate)
+(arity goodRockSong 1)
+(arg1Isa goodRockSong MillionSong)
+(comment goodRockSong
+ "(goodRockSong ?millionsong) indicates that ?millionsong is a loudSong and not a quietSong.")
+
+(<== (goodRockSong ?millionsong)
+     (loudSong ?millionsong)
+     (uninferredSentence (quietSong ?millionsong))) ;; Skip if ?millionsong2 is loud
