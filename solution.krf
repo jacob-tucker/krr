@@ -20,6 +20,12 @@
 (comment fastSong
  "(fastSong ?millionsong) indicates that ?millionsong has a tempo above 120.0.")
 
+(isa slowSong Predicate)
+(arity slowSong 1)
+(arg1Isa slowSong MillionSong)
+(comment slowSong
+ "(slowSong ?millionsong) indicates that ?millionsong has a tempo below 120.0.")
+
 (isa loudSong Predicate)
 (arity loudSong 1)
 (arg1Isa loudSong MillionSong)
@@ -31,6 +37,12 @@
 (arg1Isa quietSong MillionSong)
 (comment quietSong
  "(quietSong ?millionsong) indicates that ?millionsong has a loudness below -10.0.")
+
+(isa longSong Predicate)
+(arity longSong 1)
+(arg1Isa longSong MillionSong)
+(comment longSong
+ "(longSong ?millionsong) indicates that ?millionsong has a duration above 240.")
  
 ;;; Songs
 
@@ -87,31 +99,55 @@
 
 ;;; Tempo classifications
 
+(slowSong SilentNight)
 (fastSong Tanssivaan)
 (fastSong NoOneCouldEver)
+(slowSong SiVosQuers)
 (fastSong TangleOfAspens)
+(slowSong SymphonyNo1GminorSinfonieSerieuseAllegroconenergia)
+(slowSong WeHaveGotLove)
+(slowSong 2DaBeatChyall)
+(slowSong Goodbye)
 (fastSong Mamamamacantyousee)
+(slowSong Lantarctique)
+(slowSong Elhijodelpueblo)
+(slowSong ColdBeerfeatPrinceMetropolitan)
+(slowSong Pilots)
+(slowSong NGana)
 (fastSong 006)
+(slowSong LookingForTheHeartOfSaturday)
 (fastSong EthosofCoercion)
+(slowSong RockNRule)
+(slowSong Labolaextra)
 (fastSong IMadeItOver)
 (fastSong Debussy12EtudesVIPourleshuitdoigts)
 (fastSong Nervous)
 (fastSong InTheJourney)
+(slowSong FuckinEthicPeople999)
 (fastSong TuVidaConLaMa)
+(slowSong ImReady)
 (fastSong TakeAsNeeded)
 (fastSong AutumnInTheMindAcousticVersion)
 (fastSong Tequila)
+(slowSong AllForAPurposeSpeakLifeAlbumVersion)
 (fastSong COn)
 (fastSong RaspberryBeretLPVersion)
 (fastSong Allofthesameblood)
 (fastSong OneLittleTooLittle)
+(slowSong CockleshellHeroes)
+(slowSong Trancesequence)
 (fastSong WonderfulStash)
+(slowSong Lafilo)
+(slowSong ThrowItAway)
 (fastSong BeforeHeKissedMe)
 (fastSong Blessed)
 (fastSong GoaAmsterdam)
+(slowSong DisasterDemoVersion)
 (fastSong NightAndDay)
+(slowSong Passione)
 (fastSong MyEverythingScrewedfeatTraeTheTruth)
 (fastSong Scream)
+(slowSong TheManDelusion)
 (fastSong HeIsNotSilentOutOfTheGreyAlbumVersion)
 
 ;;; Loudness classifications
@@ -167,6 +203,31 @@
 (loudSong TheManDelusion)
 (loudSong HeIsNotSilentOutOfTheGreyAlbumVersion)
 
+;;; Duration classifications
+
+(longSong SilentNight)
+(longSong TangleOfAspens)
+(longSong SymphonyNo1GminorSinfonieSerieuseAllegroconenergia)
+(longSong ColdBeerfeatPrinceMetropolitan)
+(longSong Pilots)
+(longSong NGana)
+(longSong 006)
+(longSong Labolaextra)
+(longSong IMadeItOver)
+(longSong InTheJourney)
+(longSong TuVidaConLaMa)
+(longSong ImReady)
+(longSong COn)
+(longSong Allofthesameblood)
+(longSong WonderfulStash)
+(longSong Lafilo)
+(longSong ThrowItAway)
+(longSong Blessed)
+(longSong GoaAmsterdam)
+(longSong MyEverythingScrewedfeatTraeTheTruth)
+(longSong Scream)
+(longSong HeIsNotSilentOutOfTheGreyAlbumVersion)
+
 
 
 (isa goodRockSong Predicate)
@@ -177,4 +238,18 @@
 
 (<== (goodRockSong ?millionsong)
      (loudSong ?millionsong)
-     (uninferredSentence (quietSong ?millionsong))) ;; Skip if ?millionsong2 is loud
+     (fastSong ?millionsong)
+     (uninferredSentence (quietSong ?millionsong))) ;; Skip if ?millionsong is loud
+
+(<== (isa ?song weddingSong)
+     (quietSong ?song)
+     (longSong ?song))
+
+(<== (isa ?song elevatorSong)
+     (quietSong ?song)
+     (slowSong ?song)
+     (longSong ?song))
+
+(<== (isa ?song coffeeShopSong)
+     (slowSong ?song)
+     (quietSong ?song))

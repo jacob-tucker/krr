@@ -27,6 +27,12 @@ f.write('''
 (comment fastSong
  "(fastSong ?millionsong) indicates that ?millionsong has a tempo above 120.0.")
 
+(isa slowSong Predicate)
+(arity slowSong 1)
+(arg1Isa slowSong MillionSong)
+(comment slowSong
+ "(slowSong ?millionsong) indicates that ?millionsong has a tempo below 120.0.")
+
 (isa loudSong Predicate)
 (arity loudSong 1)
 (arg1Isa loudSong MillionSong)
@@ -38,6 +44,12 @@ f.write('''
 (arg1Isa quietSong MillionSong)
 (comment quietSong
  "(quietSong ?millionsong) indicates that ?millionsong has a loudness below -10.0.")
+
+(isa longSong Predicate)
+(arity longSong 1)
+(arg1Isa longSong MillionSong)
+(comment longSong
+ "(longSong ?millionsong) indicates that ?millionsong has a duration above 240.")
  
 ''')
 ###################################
@@ -138,11 +150,14 @@ f.write(";;; Songs\n\n")
 for song_title in song_titles:
   f.write("(isa {} MillionSong)\n".format(song_title))
   
+  
 f.write("\n;;; Tempo classifications\n\n")
 for song_title in song_titles:
   song_tempo = song_info_dict[song_title][5]
   if song_tempo >= 120.0:
     f.write("(fastSong {})\n".format(song_title))
+  else:
+    f.write("(slowSong {})\n".format(song_title))
 
 f.write("\n;;; Loudness classifications\n\n")
 for song_title in song_titles:
@@ -151,6 +166,12 @@ for song_title in song_titles:
     f.write("(loudSong {})\n".format(song_title))
   else:
     f.write("(quietSong {})\n".format(song_title))
+
+f.write("\n;;; Duration classifications\n\n")
+for song_title in song_titles:
+  song_duration = song_info_dict[song_title][4]
+  if song_duration >= 240:
+    f.write("(longSong {})\n".format(song_title))
 
 f.write('''\n\n
 (isa goodRockSong Predicate)
@@ -163,5 +184,18 @@ f.write('''\n\n
      (loudSong ?millionsong)
      (fastSong ?millionsong)
      (uninferredSentence (quietSong ?millionsong))) ;; Skip if ?millionsong is loud
+
+(<== (isa ?song weddingSong)
+     (quietSong ?song)
+     (longSong ?song))
+
+(<== (isa ?song elevatorSong)
+     (quietSong ?song)
+     (slowSong ?song)
+     (longSong ?song))
+
+(<== (isa ?song coffeeShopSong)
+     (slowSong ?song)
+     (quietSong ?song))
 ''')
 f.close()
