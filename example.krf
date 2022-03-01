@@ -1,0 +1,38 @@
+;; An example of what should autopopulate the file
+
+(in-microtheory SongsMt)
+(isa SongsMt Microtheory)
+(comment SongsMt
+  "SongsMt is a microtheory about songs and how they relate to one another. It includes HORN clauses inFIRE.")
+(genlMt SongsMt KioskDataMt) ;; Uses knowledge from the CS Kiosk
+
+(isa MillionSong Collection)
+(genls MillionSong MusicalComposition)
+(comment MillionSong
+ "A song is a MillionSong if it is from the Million Songs Dataset.")
+
+(isa SomeHardCoreRockSong MillionSong)
+(isa SomeQuietSong MillionSong)
+
+;;; Predicates
+
+(isa loudSong Predicate)
+(arity loudSong 1)
+(arg1Isa loudSong MillionSong)
+(comment loudSong
+ "(loudSong ?millionsong) indicates that ?millionsong is a loud song.")
+
+(loudSong SomeHardCoreRockSong)
+
+(isa louderThan Predicate)
+(arity louderThan 2)
+(arg1Isa louderThan MillionSong)
+(arg2Isa louderThan MillionSong)
+(comment louderThan
+ "(louderThan ?millionsong1 ?millionsong2) indicates that ?millionsong1 is louder than ?millionsong2.")
+
+(louderThan SomeHardCoreRockSong SomeQuietSong)
+
+(<== (louderThan ?millionsong1 ?millionsong2)
+     (loudSong ?millionsong1)
+     (uninferredSentence (loudSong ?millionsong2))) ;; Skip if ?millionsong2 is loud

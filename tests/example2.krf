@@ -1,0 +1,13 @@
+(in-microtheory SongsMt)
+(isa SongsMt Microtheory)
+(comment SongsMt
+  "SongsMt is a microtheory about songs and how they relate to one another. It includes HORN clauses inFIRE.")
+(genlMt SongsMt KioskDataMt) ;; Uses knowledge from the CS Kiosk
+
+(isa MillionSong Collection)
+(genls MillionSong MusicalComposition)
+(comment MillionSong
+ "A song is a MillionSong if it is from the Million Songs Dataset.")
+
+(isa SomeHardCoreRockSong MillionSong)
+(isa SomeQuietSong MillionSong)
