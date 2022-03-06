@@ -16,8 +16,24 @@ f.write('''
 
 (isa MillionSong Collection)
 (genls MillionSong MusicalComposition)
+(genls MillionSong Song-CW)
 (comment MillionSong
  "A song is a MillionSong if it is from the Million Songs Dataset.")
+
+(isa WeddingMusicalCompositionTypeByGenre Collection)
+(genls WeddingMusicalCompositionTypeByGenre MusicalCompositionTypeByGenre)
+(comment WeddingMusicalCompositionTypeByGenre
+ "This is a collection of songs that could be played at weddings.")
+
+(isa ElevatorMusicalCompositionTypeByGenre Collection)
+(genls ElevatorMusicalCompositionTypeByGenre MusicalCompositionTypeByGenre)
+(comment ElevatorMusicalCompositionTypeByGenre
+ "This is a collection of songs that could be played inside of an elevator.")
+
+(isa CoffeeShopMusicalCompositionByGenre Collection)
+(genls CoffeeShopMusicalCompositionByGenre MusicalCompositionTypeByGenre)
+(comment CoffeeShopMusicalCompositionByGenre
+ "This is a collection of songs that could be played at a coffee shop.")
 
 ;;; Predicates
 
@@ -185,17 +201,22 @@ f.write('''\n\n
      (fastSong ?millionsong)
      (uninferredSentence (quietSong ?millionsong))) ;; Skip if ?millionsong is loud
 
-(<== (isa ?song weddingSong)
+(<== (isa ?song WeddingMusicalCompositionTypeByGenre)
      (quietSong ?song)
      (longSong ?song))
 
-(<== (isa ?song elevatorSong)
+(<== (isa ?song ElevatorMusicalCompositionTypeByGenre)
      (quietSong ?song)
      (slowSong ?song)
      (longSong ?song))
 
-(<== (isa ?song coffeeShopSong)
+(<== (isa ?song CoffeeShopMusicalCompositionByGenre)
      (slowSong ?song)
      (quietSong ?song))
+
+(<== (isa ?song RockMusicalCompositionByGenre)
+     (loudSong ?millionsong)
+     (fastSong ?millionsong)
+     (uninferredSentence (quietSong ?millionsong)))
 ''')
 f.close()

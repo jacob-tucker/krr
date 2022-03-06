@@ -1,0 +1,2 @@
+(<== (isa ?song RockMusicalCompositionByGenre)
+     (goodRockSong ?song))
