@@ -253,6 +253,7 @@
  "(goodRockSong ?millionsong) indicates that ?millionsong is a loudSong and not a quietSong.")
 
 (<== (goodRockSong ?millionsong)
+     (isa ?millionsong MillionSong)
      (isa ?millionsong RockMusicalCompositionTypeByGenre))
 
 (<== (isa ?song WeddingMusicalCompositionTypeByGenre)
