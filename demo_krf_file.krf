@@ -1,0 +1,361 @@
+
+;; An example of what should autopopulate the file
+
+(in-microtheory SongsMt)
+(isa SongsMt Microtheory)
+(comment SongsMt
+  "SongsMt is a microtheory about songs and how they relate to one another. It includes HORN clauses inFIRE.")
+(genlMt SongsMt KioskDataMt) ;; Uses knowledge from the CS Kiosk
+
+(isa WeddingMusicalCompositionTypeByGenre Collection)
+(genls WeddingMusicalCompositionTypeByGenre MusicalCompositionTypeByGenre)
+(comment WeddingMusicalCompositionTypeByGenre
+ "This is a collection of songs that could be played at weddings.")
+
+(isa ElevatorMusicalCompositionTypeByGenre Collection)
+(genls ElevatorMusicalCompositionTypeByGenre MusicalCompositionTypeByGenre)
+(comment ElevatorMusicalCompositionTypeByGenre
+ "This is a collection of songs that could be played inside of an elevator.")
+
+(isa CoffeeShopMusicalCompositionTypeByGenre Collection)
+(genls CoffeeShopMusicalCompositionTypeByGenre MusicalCompositionTypeByGenre)
+(comment CoffeeShopMusicalCompositionTypeByGenre
+ "This is a collection of songs that could be played at a coffee shop.")
+
+(isa PopMusicalCompositionTypeByGenre Collection)
+(genls PopMusicalCompositionTypeByGenre MusicalCompositionTypeByGenre)
+(comment PopMusicalCompositionTypeByGenre
+ "This is a collection of songs that fit in the pop category.")
+
+;;; Predicates
+
+(isa fastSong Predicate)
+(arity fastSong 1)
+(arg1Isa fastSong MusicalComposition)
+(comment fastSong
+ "(fastSong ?song) indicates that ?song has a tempo above 120.0.")
+
+(isa slowSong Predicate)
+(arity slowSong 1)
+(arg1Isa slowSong MusicalComposition)
+(comment slowSong
+ "(slowSong ?song) indicates that ?song has a tempo below 120.0.")
+
+(isa loudSong Predicate)
+(arity loudSong 1)
+(arg1Isa loudSong MusicalComposition)
+(comment loudSong
+ "(loudSong ?song) indicates that ?song has a loudness above -10.0.")
+
+(isa quietSong Predicate)
+(arity quietSong 1)
+(arg1Isa quietSong MusicalComposition)
+(comment quietSong
+ "(quietSong ?song) indicates that ?song has a loudness below -10.0.")
+
+(isa longSong Predicate)
+(arity longSong 1)
+(arg1Isa longSong MusicalComposition)
+(comment longSong
+ "(longSong ?song) indicates that ?song has a duration above 240.")
+
+(isa danceableSong Predicate)
+(arity danceableSong 1)
+(arg1Isa danceableSong MusicalComposition)
+(comment danceableSong
+ "(danceableSong ?song) indicates that ?song is danceable.")
+
+(isa energeticSong Predicate)
+(arity energeticSong 1)
+(arg1Isa energeticSong MusicalComposition)
+(comment energeticSong
+ "(energeticSong ?song) indicates that ?song is an energetic song.")
+
+(isa popularSong Predicate)
+(arity popularSong 1)
+(arg1Isa popularSong MusicalComposition)
+(comment popularSong
+ "(popularSong ?song) indicates that ?song is popular.")
+
+(isa acousticSong Predicate)
+(arity acousticSong 1)
+(arg1Isa acousticSong MusicalComposition)
+(comment acousticSong
+ "(popularSong ?song) indicates that ?song is an acoustic song.")
+ 
+;;; Songs
+
+(isa SilentNight MusicalComposition)
+(isa Tanssivaan MusicalComposition)
+(isa NoOneCouldEver MusicalComposition)
+(isa SiVosQuers MusicalComposition)
+(isa TangleOfAspens MusicalComposition)
+(isa SymphonyNo1GminorSinfonieSerieuseAllegroconenergia MusicalComposition)
+(isa WeHaveGotLove MusicalComposition)
+(isa 2DaBeatChyall MusicalComposition)
+(isa Goodbye MusicalComposition)
+(isa Mamamamacantyousee MusicalComposition)
+(isa Lantarctique MusicalComposition)
+(isa Elhijodelpueblo MusicalComposition)
+(isa ColdBeerfeatPrinceMetropolitan MusicalComposition)
+(isa Pilots MusicalComposition)
+(isa NGana MusicalComposition)
+(isa 006 MusicalComposition)
+(isa LookingForTheHeartOfSaturday MusicalComposition)
+(isa EthosofCoercion MusicalComposition)
+(isa RockNRule MusicalComposition)
+(isa Labolaextra MusicalComposition)
+(isa IMadeItOver MusicalComposition)
+(isa Debussy12EtudesVIPourleshuitdoigts MusicalComposition)
+(isa Nervous MusicalComposition)
+(isa InTheJourney MusicalComposition)
+(isa FuckinEthicPeople999 MusicalComposition)
+(isa TuVidaConLaMa MusicalComposition)
+(isa ImReady MusicalComposition)
+(isa TakeAsNeeded MusicalComposition)
+(isa AutumnInTheMindAcousticVersion MusicalComposition)
+(isa Tequila MusicalComposition)
+(isa AllForAPurposeSpeakLifeAlbumVersion MusicalComposition)
+(isa COn MusicalComposition)
+(isa RaspberryBeretLPVersion MusicalComposition)
+(isa Allofthesameblood MusicalComposition)
+(isa OneLittleTooLittle MusicalComposition)
+(isa CockleshellHeroes MusicalComposition)
+(isa Trancesequence MusicalComposition)
+(isa WonderfulStash MusicalComposition)
+(isa Lafilo MusicalComposition)
+(isa ThrowItAway MusicalComposition)
+(isa BeforeHeKissedMe MusicalComposition)
+(isa Blessed MusicalComposition)
+(isa GoaAmsterdam MusicalComposition)
+(isa DisasterDemoVersion MusicalComposition)
+(isa NightAndDay MusicalComposition)
+(isa Passione MusicalComposition)
+(isa MyEverythingScrewedfeatTraeTheTruth MusicalComposition)
+(isa Scream MusicalComposition)
+(isa TheManDelusion MusicalComposition)
+(isa HeIsNotSilentOutOfTheGreyAlbumVersion MusicalComposition)
+(isa BarbieGirl MusicalComposition)
+
+;;; Tempo classifications
+
+(slowSong SilentNight)
+(fastSong Tanssivaan)
+(fastSong NoOneCouldEver)
+(slowSong SiVosQuers)
+(fastSong TangleOfAspens)
+(slowSong SymphonyNo1GminorSinfonieSerieuseAllegroconenergia)
+(slowSong WeHaveGotLove)
+(slowSong 2DaBeatChyall)
+(slowSong Goodbye)
+(fastSong Mamamamacantyousee)
+(slowSong Lantarctique)
+(slowSong Elhijodelpueblo)
+(slowSong ColdBeerfeatPrinceMetropolitan)
+(slowSong Pilots)
+(slowSong NGana)
+(fastSong 006)
+(slowSong LookingForTheHeartOfSaturday)
+(fastSong EthosofCoercion)
+(slowSong RockNRule)
+(slowSong Labolaextra)
+(fastSong IMadeItOver)
+(fastSong Debussy12EtudesVIPourleshuitdoigts)
+(fastSong Nervous)
+(fastSong InTheJourney)
+(slowSong FuckinEthicPeople999)
+(fastSong TuVidaConLaMa)
+(slowSong ImReady)
+(fastSong TakeAsNeeded)
+(fastSong AutumnInTheMindAcousticVersion)
+(fastSong Tequila)
+(slowSong AllForAPurposeSpeakLifeAlbumVersion)
+(fastSong COn)
+(fastSong RaspberryBeretLPVersion)
+(fastSong Allofthesameblood)
+(fastSong OneLittleTooLittle)
+(slowSong CockleshellHeroes)
+(slowSong Trancesequence)
+(fastSong WonderfulStash)
+(slowSong Lafilo)
+(slowSong ThrowItAway)
+(fastSong BeforeHeKissedMe)
+(fastSong Blessed)
+(fastSong GoaAmsterdam)
+(slowSong DisasterDemoVersion)
+(fastSong NightAndDay)
+(slowSong Passione)
+(fastSong MyEverythingScrewedfeatTraeTheTruth)
+(fastSong Scream)
+(slowSong TheManDelusion)
+(fastSong HeIsNotSilentOutOfTheGreyAlbumVersion)
+(fastSong BarbieGirl)
+
+;;; Loudness classifications
+
+(loudSong SilentNight)
+(quietSong Tanssivaan)
+(loudSong NoOneCouldEver)
+(loudSong SiVosQuers)
+(loudSong TangleOfAspens)
+(quietSong SymphonyNo1GminorSinfonieSerieuseAllegroconenergia)
+(loudSong WeHaveGotLove)
+(quietSong 2DaBeatChyall)
+(quietSong Goodbye)
+(quietSong Mamamamacantyousee)
+(quietSong Lantarctique)
+(quietSong Elhijodelpueblo)
+(loudSong ColdBeerfeatPrinceMetropolitan)
+(quietSong Pilots)
+(quietSong NGana)
+(loudSong 006)
+(quietSong LookingForTheHeartOfSaturday)
+(loudSong EthosofCoercion)
+(loudSong RockNRule)
+(loudSong Labolaextra)
+(loudSong IMadeItOver)
+(quietSong Debussy12EtudesVIPourleshuitdoigts)
+(loudSong Nervous)
+(loudSong InTheJourney)
+(quietSong FuckinEthicPeople999)
+(loudSong TuVidaConLaMa)
+(loudSong ImReady)
+(loudSong TakeAsNeeded)
+(quietSong AutumnInTheMindAcousticVersion)
+(quietSong Tequila)
+(loudSong AllForAPurposeSpeakLifeAlbumVersion)
+(loudSong COn)
+(loudSong RaspberryBeretLPVersion)
+(loudSong Allofthesameblood)
+(loudSong OneLittleTooLittle)
+(quietSong CockleshellHeroes)
+(quietSong Trancesequence)
+(loudSong WonderfulStash)
+(loudSong Lafilo)
+(loudSong ThrowItAway)
+(loudSong BeforeHeKissedMe)
+(quietSong Blessed)
+(loudSong GoaAmsterdam)
+(loudSong DisasterDemoVersion)
+(loudSong NightAndDay)
+(loudSong Passione)
+(quietSong MyEverythingScrewedfeatTraeTheTruth)
+(loudSong Scream)
+(loudSong TheManDelusion)
+(loudSong HeIsNotSilentOutOfTheGreyAlbumVersion)
+(loudSong BarbieGirl)
+
+;;; Duration classifications
+
+(longSong SilentNight)
+(longSong TangleOfAspens)
+(longSong SymphonyNo1GminorSinfonieSerieuseAllegroconenergia)
+(longSong ColdBeerfeatPrinceMetropolitan)
+(longSong Pilots)
+(longSong NGana)
+(longSong 006)
+(longSong Labolaextra)
+(longSong IMadeItOver)
+(longSong InTheJourney)
+(longSong TuVidaConLaMa)
+(longSong ImReady)
+(longSong COn)
+(longSong Allofthesameblood)
+(longSong WonderfulStash)
+(longSong Lafilo)
+(longSong ThrowItAway)
+(longSong Blessed)
+(longSong GoaAmsterdam)
+(longSong MyEverythingScrewedfeatTraeTheTruth)
+(longSong Scream)
+(longSong HeIsNotSilentOutOfTheGreyAlbumVersion)
+
+;;; Danceability classifications
+
+(danceableSong BarbieGirl)
+
+;;; Energy classifications
+
+(energeticSong BarbieGirl)
+
+;;; Popularity classifications
+
+(popularSong BarbieGirl)
+
+;;; Acousticness classifications
+
+
+
+
+(isa popularRockSong Predicate)
+(arity popularRockSong 1)
+(arg1Isa popularRockSong MusicalComposition)
+(comment popularRockSong
+ "(popularRockSong ?song) indicates that ?song is both popular and a rock song.")
+
+(isa goodRockSong Predicate)
+(arity goodRockSong 1)
+(arg1Isa goodRockSong MusicalComposition)
+(comment goodRockSong
+ "(goodRockSong ?song) indicates that ?song is a MusicalComposition and not a rock song.")
+
+(isa popularPopSong Predicate)
+(arity popularPopSong 1)
+(arg1Isa popularPopSong MusicalComposition)
+(comment popularPopSong
+ "(popularPopSong ?song) indicates that ?song is a popular and a pop song.")
+
+(isa aloneTimeSong Predicate)
+(arity aloneTimeSong 1)
+(arg1Isa aloneTimeSong MusicalComposition)
+(comment aloneTimeSong
+ "(aloneTimeSong ?song) indicates that ?song is a song you listen to when you are alone and want to focus on yourself.")
+
+(isa fitnessSong Predicate)
+(arity fitnessSong 1)
+(arg1Isa fitnessSong MusicalComposition)
+(comment fitnessSong
+ "(fitnessSong ?song) indicates that ?song is a song you listen to when you are doing fitness.")
+
+(<== (fitnessSong ?song)
+     (fastSong ?song)
+     (energeticSong ?song) 
+     (danceableSong ?song))
+
+(<== (popularRockSong ?song)
+     (popularSong ?song)
+     (isa ?song RockMusicalCompositionTypeByGenre))
+
+(<== (popularPopSong ?song)
+     (popularSong ?song)
+     (isa ?song PopMusicalCompositionTypeByGenre))
+
+(<== (goodRockSong ?song)
+     (isa ?song MusicalComposition)
+     (isa ?song RockMusicalCompositionTypeByGenre))
+
+(<== (aloneTimeSong ?song)
+     (quietSong ?song)
+     (slowSong ?song))
+
+(<== (isa ?song WeddingMusicalCompositionTypeByGenre)
+     (quietSong ?song)
+     (longSong ?song))
+
+(<== (isa ?song ElevatorMusicalCompositionTypeByGenre)
+     (quietSong ?song)
+     (slowSong ?song)
+     (longSong ?song))
+
+(<== (isa ?song CoffeeShopMusicalCompositionTypeByGenre)
+     (slowSong ?song)
+     (quietSong ?song))
+
+(<== (isa ?song RockMusicalCompositionTypeByGenre)
+     (loudSong ?song)
+     (uninferredSentence (quietSong ?song)))
+
+(<== (isa ?song PopMusicalCompositionTypeByGenre)
+     (loudSong ?song)
+     (fastSong ?song)
+     (danceableSong ?song))

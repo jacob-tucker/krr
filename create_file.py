@@ -2,6 +2,32 @@ import h5py
 import tables
 import re
 
+### SPOTIPY
+import spotipy
+import sys
+from spotipy.oauth2 import SpotifyClientCredentials
+import re
+cid = 'a461fd950e6a4a36ae8c0cd1172d9021'
+secret = '706116abeaba42e6872ebc2678268b27'
+auth_manager = SpotifyClientCredentials(client_id=cid, client_secret=secret)
+spotify = spotipy.Spotify(auth_manager=auth_manager)
+
+if len(sys.argv) > 1:
+    print(' '.join(sys.argv[1:]))
+    name = ' '.join(sys.argv[1:])
+else:
+    name = 'Take me Home'
+
+track_info = spotify.search(q='track: ' + name)
+track_name = re.sub('[^0-9a-zA-Z]+', "", track_info['tracks']['items'][0]['name'])
+custom_track_popularity = track_info['tracks']['items'][0]['popularity']
+custom_track_id = track_info['tracks']['items'][0]['id']
+
+results = spotify.audio_features(custom_track_id)
+custom_analysis = results[0]
+print(custom_analysis)
+###
+
 ### POPULATING INITIAL KRF FILE ###
 f = open("demo_krf_file.krf", "w")
 
@@ -14,12 +40,6 @@ f.write('''
   "SongsMt is a microtheory about songs and how they relate to one another. It includes HORN clauses inFIRE.")
 (genlMt SongsMt KioskDataMt) ;; Uses knowledge from the CS Kiosk
 
-(isa MillionSong Collection)
-(genls MillionSong MusicalComposition)
-(genls MillionSong Song-CW)
-(comment MillionSong
- "A song is a MillionSong if it is from the Million Songs Dataset.")
-
 (isa WeddingMusicalCompositionTypeByGenre Collection)
 (genls WeddingMusicalCompositionTypeByGenre MusicalCompositionTypeByGenre)
 (comment WeddingMusicalCompositionTypeByGenre
@@ -30,78 +50,82 @@ f.write('''
 (comment ElevatorMusicalCompositionTypeByGenre
  "This is a collection of songs that could be played inside of an elevator.")
 
-(isa CoffeeShopMusicalCompositionByGenre Collection)
-(genls CoffeeShopMusicalCompositionByGenre MusicalCompositionTypeByGenre)
-(comment CoffeeShopMusicalCompositionByGenre
+(isa CoffeeShopMusicalCompositionTypeByGenre Collection)
+(genls CoffeeShopMusicalCompositionTypeByGenre MusicalCompositionTypeByGenre)
+(comment CoffeeShopMusicalCompositionTypeByGenre
  "This is a collection of songs that could be played at a coffee shop.")
+
+(isa PopMusicalCompositionTypeByGenre Collection)
+(genls PopMusicalCompositionTypeByGenre MusicalCompositionTypeByGenre)
+(comment PopMusicalCompositionTypeByGenre
+ "This is a collection of songs that fit in the pop category.")
 
 ;;; Predicates
 
 (isa fastSong Predicate)
 (arity fastSong 1)
-(arg1Isa fastSong MillionSong)
+(arg1Isa fastSong MusicalComposition)
 (comment fastSong
- "(fastSong ?millionsong) indicates that ?millionsong has a tempo above 120.0.")
+ "(fastSong ?song) indicates that ?song has a tempo above 120.0.")
 
 (isa slowSong Predicate)
 (arity slowSong 1)
-(arg1Isa slowSong MillionSong)
+(arg1Isa slowSong MusicalComposition)
 (comment slowSong
- "(slowSong ?millionsong) indicates that ?millionsong has a tempo below 120.0.")
+ "(slowSong ?song) indicates that ?song has a tempo below 120.0.")
 
 (isa loudSong Predicate)
 (arity loudSong 1)
-(arg1Isa loudSong MillionSong)
+(arg1Isa loudSong MusicalComposition)
 (comment loudSong
- "(loudSong ?millionsong) indicates that ?millionsong has a loudness above -10.0.")
+ "(loudSong ?song) indicates that ?song has a loudness above -10.0.")
 
 (isa quietSong Predicate)
 (arity quietSong 1)
-(arg1Isa quietSong MillionSong)
+(arg1Isa quietSong MusicalComposition)
 (comment quietSong
- "(quietSong ?millionsong) indicates that ?millionsong has a loudness below -10.0.")
+ "(quietSong ?song) indicates that ?song has a loudness below -10.0.")
 
 (isa longSong Predicate)
 (arity longSong 1)
-(arg1Isa longSong MillionSong)
+(arg1Isa longSong MusicalComposition)
 (comment longSong
- "(longSong ?millionsong) indicates that ?millionsong has a duration above 240.")
+ "(longSong ?song) indicates that ?song has a duration above 240.")
+
+(isa danceableSong Predicate)
+(arity danceableSong 1)
+(arg1Isa danceableSong MusicalComposition)
+(comment danceableSong
+ "(danceableSong ?song) indicates that ?song is danceable.")
+
+(isa energeticSong Predicate)
+(arity energeticSong 1)
+(arg1Isa energeticSong MusicalComposition)
+(comment energeticSong
+ "(energeticSong ?song) indicates that ?song is an energetic song.")
+
+(isa popularSong Predicate)
+(arity popularSong 1)
+(arg1Isa popularSong MusicalComposition)
+(comment popularSong
+ "(popularSong ?song) indicates that ?song is popular.")
+
+(isa acousticSong Predicate)
+(arity acousticSong 1)
+(arg1Isa acousticSong MusicalComposition)
+(comment acousticSong
+ "(popularSong ?song) indicates that ?song is an acoustic song.")
  
 ''')
 ###################################
 
 # Filenames + Dir
-dir = "/content/drive/MyDrive/371_Data/"
-filename_1 = "TRAAAMQ128F1460CD3.h5"
-filename_2 = "TRAAAAW128F429D538.h5"
+dir = ""
 filename_3 = "msd_summary_file.h5"
-file_path_1 = dir + filename_1
-file_path_2 = dir + filename_2
 file_path_3 = dir + filename_3
-# H5PY Open
-dataset = h5py.File(file_path_1, "r")
 # PyTables Open
-h5file = tables.open_file(file_path_1, mode='r')
-h5file_2 = tables.open_file(file_path_2, mode='r')
 h5file_3 = tables.open_file(file_path_3, mode='r')
-# Use Pytables
-# print(f"The number of songs in this file is: {h5file.root.metadata.songs.nrows}")
-# print(f"The artist name is: {h5file.root.metadata.songs.cols.artist_name[0]}")
-# print(f"The song title is: {h5file.root.metadata.songs.cols.title[0]}")
-# print(f"The song's danceability is: {h5file.root.analysis.songs.cols.danceability[0]}")
-# print(f"The song's energy is: {h5file.root.analysis.songs.cols.energy[0]}")
-# print(f"The song's loudness is: {h5file.root.analysis.songs.cols.loudness[0]}")
-# print(f"The song's duration is: {h5file.root.analysis.songs.cols.duration[0]}")
-# print(f"The song's tempo is: {h5file.root.analysis.songs.cols.tempo[0]}")
-# print("\n")
-# print(f"The number of songs in this file is: {h5file_2.root.metadata.songs.nrows}")
-# print(f"The artist name is: {h5file_2.root.metadata.songs.cols.artist_name[0]}")
-# print(f"The song title is: {h5file_2.root.metadata.songs.cols.title[0]}")
-# print(f"The song's danceability is: {h5file_2.root.analysis.songs.cols.danceability[0]}")
-# print(f"The song's energy is: {h5file_2.root.analysis.songs.cols.energy[0]}")
-# print(f"The song's loudness is: {h5file_2.root.analysis.songs.cols.loudness[0]}")
-# print(f"The song's duration is: {h5file_2.root.analysis.songs.cols.duration[0]}")
-# print(f"The song's tempo is: {h5file_2.root.analysis.songs.cols.tempo[0]}")
+
 print("\n")
 print(f"The number of songs in this file is: {h5file_3.root.metadata.songs.nrows}")
 song_info_dict = {}
@@ -164,8 +188,8 @@ for song_title in song_titles:
 ### ADDING INFO TO KRF FILE ###
 f.write(";;; Songs\n\n")
 for song_title in song_titles:
-  f.write("(isa {} MillionSong)\n".format(song_title))
-  
+  f.write("(isa {} MusicalComposition)\n".format(song_title))
+f.write("(isa {} MusicalComposition)\n".format(track_name))
   
 f.write("\n;;; Tempo classifications\n\n")
 for song_title in song_titles:
@@ -174,6 +198,10 @@ for song_title in song_titles:
     f.write("(fastSong {})\n".format(song_title))
   else:
     f.write("(slowSong {})\n".format(song_title))
+if custom_analysis['tempo'] >= 120.0:
+  f.write("(fastSong {})\n".format(track_name))
+else:
+    f.write("(slowSong {})\n".format(track_name))
 
 f.write("\n;;; Loudness classifications\n\n")
 for song_title in song_titles:
@@ -182,24 +210,87 @@ for song_title in song_titles:
     f.write("(loudSong {})\n".format(song_title))
   else:
     f.write("(quietSong {})\n".format(song_title))
+if custom_analysis['loudness'] >= -10.0:
+  f.write("(loudSong {})\n".format(track_name))
+else:
+    f.write("(quietSong {})\n".format(track_name))
 
 f.write("\n;;; Duration classifications\n\n")
 for song_title in song_titles:
   song_duration = song_info_dict[song_title][4]
   if song_duration >= 240:
     f.write("(longSong {})\n".format(song_title))
+if (custom_analysis['duration_ms']/1000) >= 240:
+  f.write("(longSong {})\n".format(track_name))
+
+f.write("\n;;; Danceability classifications\n\n")
+if custom_analysis['danceability'] >= .6:
+  f.write("(danceableSong {})\n".format(track_name))
+
+f.write("\n;;; Energy classifications\n\n")
+if custom_analysis['energy'] >= .75:
+  f.write("(energeticSong {})\n".format(track_name))
+
+f.write("\n;;; Popularity classifications\n\n")
+if custom_track_popularity >= 50:
+  f.write("(popularSong {})\n".format(track_name))
+
+f.write("\n;;; Acousticness classifications\n\n")
+print(custom_analysis['acousticness'])
+if custom_analysis['acousticness'] >= .75:
+  f.write("(acousticSong {})\n".format(track_name))
 
 f.write('''\n\n
+(isa popularRockSong Predicate)
+(arity popularRockSong 1)
+(arg1Isa popularRockSong MusicalComposition)
+(comment popularRockSong
+ "(popularRockSong ?song) indicates that ?song is both popular and a rock song.")
+
 (isa goodRockSong Predicate)
 (arity goodRockSong 1)
-(arg1Isa goodRockSong MillionSong)
+(arg1Isa goodRockSong MusicalComposition)
 (comment goodRockSong
- "(goodRockSong ?millionsong) indicates that ?millionsong is a loudSong and not a quietSong.")
+ "(goodRockSong ?song) indicates that ?song is a MusicalComposition and not a rock song.")
 
-(<== (goodRockSong ?millionsong)
-     (loudSong ?millionsong)
-     (fastSong ?millionsong)
-     (uninferredSentence (quietSong ?millionsong))) ;; Skip if ?millionsong is loud
+(isa popularPopSong Predicate)
+(arity popularPopSong 1)
+(arg1Isa popularPopSong MusicalComposition)
+(comment popularPopSong
+ "(popularPopSong ?song) indicates that ?song is a popular and a pop song.")
+
+(isa aloneTimeSong Predicate)
+(arity aloneTimeSong 1)
+(arg1Isa aloneTimeSong MusicalComposition)
+(comment aloneTimeSong
+ "(aloneTimeSong ?song) indicates that ?song is a song you listen to when you are alone and want to focus on yourself.")
+
+(isa fitnessSong Predicate)
+(arity fitnessSong 1)
+(arg1Isa fitnessSong MusicalComposition)
+(comment fitnessSong
+ "(fitnessSong ?song) indicates that ?song is a song you listen to when you are doing fitness.")
+
+(<== (fitnessSong ?song)
+     (fastSong ?song)
+     (energeticSong ?song) 
+     (danceableSong ?song))
+
+(<== (popularRockSong ?song)
+     (popularSong ?song)
+     (isa ?song RockMusicalCompositionTypeByGenre))
+
+(<== (popularPopSong ?song)
+     (popularSong ?song)
+     (isa ?song PopMusicalCompositionTypeByGenre))
+
+(<== (goodRockSong ?song)
+     (isa ?song MusicalComposition)
+     (isa ?song RockMusicalCompositionTypeByGenre))
+
+(<== (aloneTimeSong ?song)
+     (quietSong ?song)
+     (slowSong ?song))
 
 (<== (isa ?song WeddingMusicalCompositionTypeByGenre)
      (quietSong ?song)
@@ -210,13 +301,17 @@ f.write('''\n\n
      (slowSong ?song)
      (longSong ?song))
 
-(<== (isa ?song CoffeeShopMusicalCompositionByGenre)
+(<== (isa ?song CoffeeShopMusicalCompositionTypeByGenre)
      (slowSong ?song)
      (quietSong ?song))
 
-(<== (isa ?song RockMusicalCompositionByGenre)
-     (loudSong ?millionsong)
-     (fastSong ?millionsong)
-     (uninferredSentence (quietSong ?millionsong)))
+(<== (isa ?song RockMusicalCompositionTypeByGenre)
+     (loudSong ?song)
+     (uninferredSentence (quietSong ?song)))
+
+(<== (isa ?song PopMusicalCompositionTypeByGenre)
+     (loudSong ?song)
+     (fastSong ?song)
+     (danceableSong ?song))
 ''')
 f.close()
