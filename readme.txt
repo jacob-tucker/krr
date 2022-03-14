@@ -12,6 +12,10 @@ This is where most of our work went in. This python script generated a .krf file
 - Sets thresholds for songs to meet the requirements to assume those predicates, and assigns them
 - Includes more complex Horn clauses that bring multiple predicates together, for example "isPopularPopSong" combines both "popularSong" and "popSong". 
 
+NOTE: This script will not work unless you have the MSD summary file locally in your project. The instructions mentioned not to include large files in our submission, so it is left out in the repo. You can access the million song dataset here: http://millionsongdataset.com/pages/getting-dataset/#subset
+
+Just remember to name the file msd_summary_file.h5
+
 ## demo_krf_file.krf
 
 The `.krf` file generated from `create_file.py`. Includes all the isa statements, definitions, predicates, Horn clauses, etc.
@@ -19,6 +23,8 @@ The `.krf` file generated from `create_file.py`. Includes all the isa statements
 ## msd_summary_file.h5
 
 The file used to get data from the Million Song Database. For our purposes we only ever got 50 songs from this file, but you can get however many you want (up to a million, I suppose). You can change the number on line 157 of `create_file.py`.
+
+NOTE: As mentioned above, you will need to get this file from http://millionsongdataset.com/pages/getting-dataset/#subset
 
 ## getsongs.py
 
